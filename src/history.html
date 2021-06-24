@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <title>Калькулятор: История</title>
+    <link rel="stylesheet" href="index.css">
+  </head>
+
+  <body id="history">
+    <header>
+        <p>Выражение</p>
+        <p>Система счисления</p>
+    </header>
+    <div id="hist-body">
+
+    </div>
+    <div id="delete-hist">
+        <button onclick="clearHistory();">Очистить историю</button>
+    </div>
+    <script>
+        const { ipcRenderer } = require("electron");
+
+        function updateHistory() {
+            let history = ipcRenderer.sendSync('hist');
+            let page = '';
+            
+            if (history.length === 0) {
+                page = '<h3>История пуста</h3>';
+            }
+            else {
+                for (let item in history) {
+                    page += `<div><p>${history[item].value}</p><p>${history[item].system}</p></div>`;
+                }
+            }
+            
+            document.getElementById("hist-body").innerHTML = page;
+        }
+
+        function clearHistory() {
+            ipcRenderer.send('clrHist');
+            document.getElementById("hist-body").innerHTML = '<h3>История пуста</h3>';
+        }
+
+        window.onload = updateHistory;
+    </script>
+  </body>
+</html>

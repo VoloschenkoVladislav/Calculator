@@ -1,0 +1,135 @@
+body
+    margin: 0
+    background:#e9e9e9
+    font-family: sans-serif
+
+.output
+    overflow: hidden
+    height: auto
+    text-align: end
+    padding: 15px 10px
+
+    .output__top-string
+        color: grey
+        font-size: 20px
+        margin: 10px 0px
+        height: 22px
+
+    .output__bottom-string
+        color: black
+        font-weight: bold
+        font-size: 40px
+
+.memory
+    display: flex
+
+    .memory__button
+        color: black
+        font-wight: bold
+        text-align: center
+        height: 24px
+        width: 40px
+        font-size: 16px
+        padding-top: 4px
+        transition-duration: 0.3s
+        cursor: default
+
+    .memory__button:hover
+        background-color: rgba(0, 0, 0, 0.2)
+
+.keyboard
+    display: flex
+    flex-direction: column
+    justify-content: space-between
+
+    .keyboard__row
+        display: flex
+        align-items: stretch
+        margin: 1px 0px
+        height: 45px
+
+        .keyboard__button
+            font-family: sans-serif
+            text-align: center
+            outline: none
+            padding: 0px
+            width: 85px
+            font-size: 21px
+            margin: 0px 1px
+            transition-duration: 0.3s
+            border: none
+
+
+        .blue
+            background-color: #83b7e2
+            font-weight: lighter
+            font-size: 17px
+        .blue:hover
+            background-color: darken(#83b7e2, 20%)
+
+        .white
+            background-color: #ffffff
+        .white:hover
+            background-color: darken(#ffffff, 20%)
+
+        .grey
+            background-color: #dfdfdf
+            font-weight: lighter
+            font-size: 17px
+        .grey:hover
+            background-color: darken(#dfdfdf, 20%)
+
+        .keyboard__button[disabled]:hover
+            background-color: #ffffff
+
+        .wide
+            width: 172px
+
+.switcher
+    margin-top: 20px
+    display: flex
+    flex-direction: column
+    align-items: center
+
+#history
+    font-family: sans-serif
+
+    header
+        display: flex
+        justify-content: space-around
+        border-bottom: 1px solid black
+        background-color: darken(#dfdfdf, 20%)
+        p
+            font-weight: bolder
+            padding: 4px
+            
+
+    #hist-body
+        display: flex
+        flex-direction: column
+        div
+            display: flex
+            justify-content: space-between
+            p
+                padding-left: 15px
+                width: 150px
+                text-align: center
+        h3
+            text-align: center
+
+    #delete-hist
+        text-align: center
+        button
+            font-family: sans-serif
+            border: 1px black solid
+            border-radius: 3px
+            text-align: center
+            outline: none
+            padding: 0px
+            height: 40px
+            width: 150px
+            margin: 0px 1px
+            transition-duration: 0.3s
+
+.reference
+    padding: 5px 8px

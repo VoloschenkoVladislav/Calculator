@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Калькулятор</title>
+    <link rel="stylesheet" href="index.css">
+    <script src="./Controller.js"></script>
+  </head>
+  <body>
+    <div class="output">
+      <div class="output__top-string" id="output-t"></div>
+      <div class="output__bottom-string" id="output-b">0</div>
+    </div>
+    <div class="memory">
+      <div class="memory__button" onclick="Controller.doEx('mem', 'MC')">MC</div>
+      <div class="memory__button" onclick="Controller.doEx('mem', 'MR')">MR</div>
+      <div class="memory__button" onclick="Controller.doEx('mem', 'M+')">M+</div>
+      <div class="memory__button" onclick="Controller.doEx('mem', 'M-')">M-</div>
+      <div class="memory__button" onclick="Controller.doEx('mem', 'MS')">MS</div>
+    </div>
+    <div class="keyboard">
+      <div class="keyboard__row">
+        <button class="keyboard__button grey" onclick="paste()">Paste</button>
+        <button class="keyboard__button grey" onclick="Controller.do('clear')">CE</button>
+        <button class="keyboard__button grey" onclick="Controller.do('clear-all')">C</button>
+        <button class="keyboard__button grey" onclick="Controller.do('backspace')">BS</button>
+      </div>
+      <div class="keyboard__row">
+        <button class="keyboard__button grey" onclick="Controller.doEx('add', 'rev')">1/x</button>
+        <button class="keyboard__button grey" onclick="Controller.doEx('add', 'sqr')">x²</button>
+        <button class="keyboard__button grey" onclick="Controller.doEx('add', 'sqrt')">√</button>
+        <button class="keyboard__button grey" onclick="Controller.doEx('add', '/')">÷</button>
+      </div>
+      <div class="keyboard__row">
+        <button class="keyboard__button grey" onclick="Controller.doEx('add', '*')">×</button>
+        <button class="keyboard__button grey" onclick="Controller.doEx('add', '-')">-</button>
+        <button class="keyboard__button grey" onclick="Controller.doEx('add', '+')">+</button>
+        <button class="keyboard__button blue" onclick="Controller.do('exec')">=</button>
+      </div>
+      <div class="keyboard__row">
+        <button class="keyboard__button white" id="button-12" onclick="Controller.doEx('add', 'C')" disabled>C</button>
+        <button class="keyboard__button white" id="button-13" onclick="Controller.doEx('add', 'D')" disabled>D</button>
+        <button class="keyboard__button white" id="button-14" onclick="Controller.doEx('add', 'E')" disabled>E</button>
+        <button class="keyboard__button white" id="button-15" onclick="Controller.doEx('add', 'F')" disabled>F</button>
+      </div>
+      <div class="keyboard__row">
+        <button class="keyboard__button white" id="button-8" onclick="Controller.doEx('add', '8')">8</button>
+        <button class="keyboard__button white" id="button-9" onclick="Controller.doEx('add', '9')">9</button>
+        <button class="keyboard__button white" id="button-10" onclick="Controller.doEx('add', 'A')" disabled>A</button>
+        <button class="keyboard__button white" id="button-11" onclick="Controller.doEx('add', 'B')" disabled>B</button>
+      </div>
+      <div class="keyboard__row">
+        <button class="keyboard__button white" id="button-4" onclick="Controller.doEx('add', '4')">4</button>
+        <button class="keyboard__button white" id="button-5" onclick="Controller.doEx('add', '5')">5</button>
+        <button class="keyboard__button white" id="button-6" onclick="Controller.doEx('add', '6')">6</button>
+        <button class="keyboard__button white" id="button-7" onclick="Controller.doEx('add', '7')">7</button>
+      </div>
+      <div class="keyboard__row">
+        <button class="keyboard__button white" id="button-0" onclick="Controller.doEx('add', '0')">0</button>
+        <button class="keyboard__button white" id="button-1" onclick="Controller.doEx('add', '1')">1</button>
+        <button class="keyboard__button white" id="button-2" onclick="Controller.doEx('add', '2')">2</button>
+        <button class="keyboard__button white" id="button-3" onclick="Controller.doEx('add', '3')">3</button>
+      </div> 
+      <div class="keyboard__row">
+        <button class="keyboard__button white wide" onclick="Controller.doEx('add', '+/-')">+/-</button>
+        <button class="keyboard__button white wide" onclick="Controller.doEx('add', '.')">,</button>
+      </div>
+    </div>
+    <div class="switcher">
+      <div class="current-sustem">Система счисления: <span id="system-num">10</span></div>
+      <input type="range" id="system" min="2" max="16" value="10" oninput="document.getElementById('system-num').innerText = document.getElementById('system').value" onchange="Controller.switchSystem()">
+    </div>
+
+    <script>
+      const { clipboard } = require("electron");
+
+      function paste() {
+        let text = clipboard.readText();
+        Controller.doEx('paste', text);
+      }
+
+
+      document.addEventListener('keydown', (event) => {
+        event.preventDefault();
+        if (event.code == 'Backspace') {
+            Controller.do('backspace');
+        }
+        else if (event.code == 'Delete') {
+            Controller.do('clear-all')
+        }
+        else if (event.code == 'Enter') {
+            Controller.do('exec');
+        }
+        else if (event.code == 'KeyA') {
+            if (document.getElementById('button-10').disabled == false) Controller.doEx('add', 'A');
+        }
+        else if (event.code == 'KeyB') {
+            if (document.getElementById('button-11').disabled == false) Controller.doEx('add', 'B');
+        }
+        else if (event.code == 'KeyC') {
+            if (document.getElementById('button-12').disabled == false) Controller.doEx('add', 'C');
+        }
+        else if (event.code == 'KeyD') {
+            if (document.getElementById('button-13').disabled == false) Controller.doEx('add', 'D');
+        }
+        else if (event.code == 'KeyE') {
+            if (document.getElementById('button-14').disabled == false) Controller.doEx('add', 'E');
+        }
+        else if (event.code == 'KeyF') {
+            if (document.getElementById('button-15').disabled == false) Controller.doEx('add', 'F');
+        }
+        else if (event.code == 'Period') {
+            Controller.doEx('add', '.');
+        }
+        else if (event.key == '/') {
+            Controller.doEx('add', '/');
+        }
+        else if (event.key == '*') {
+            Controller.doEx('add', '*');
+        }
+        else if (event.key == '+') {
+            Controller.doEx('add', '+');
+        }
+        else if (event.code == '-') {
+            Controller.doEx('add', '-');
+        }
+        else {
+            let key = event.key;
+            if (document.getElementById(`button-${key}`).disabled == false) Controller.doEx('add', key);
+        }
+      });
+    </script>
+  </body>
+</html>
